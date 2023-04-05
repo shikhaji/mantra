@@ -115,47 +115,14 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                   obscureText: obscurePassword,
                 ),
                 SizedBoxH10(),
-                appText("Center Code", style: AppTextStyle.lable),
+                appText("Refer Code", style: AppTextStyle.lable),
                 SizedBoxH8(),
                 PrimaryTextField(
+                  hintText: "Enter Refer Code",
                   controller: _referCode,
-                  readOnly: _centerCodeNAme.text !="" ? true : false,
-                  hintText: "Enter center code",
-                  validator: centerCodeValidator,
                 ),
-                _centerCodeNAme.text != "" ?  Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    appText("Center Name", style: AppTextStyle.lable),
-                    SizedBoxH8(),
-                    PrimaryTextField(
-                      controller: _centerCodeNAme,
-                      readOnly: true,
-                      validator: centerCodeValidator,
-                    )
-                  ],
-                ): SizedBox.shrink(),
-
-
-                SizedBoxH8(),
-                _centerCodeNAme.text == ""  ?   PrimaryButton(
-                    lable: "Verify center code",
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-
-                        ApiService().verifyCenterCode(context,data: cc()).then((value) {
-                          if(value.status== 200){
-                         setState(() {
-                           _centerCodeNAme.text = "${value.center!.branchName}";
-                         });
-                          print("name := ${centerCodeName}");
-                          }else{
-
-                          }
-                        });
-                      }
-                    })
-             :   PrimaryButton(
+                SizedBoxH10(),
+                PrimaryButton(
                     lable: "Sign Up",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
