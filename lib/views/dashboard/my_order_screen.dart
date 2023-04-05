@@ -98,7 +98,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
 
                         Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:"${widget.arguments!.ccId}"));
 
-                      }, child: appText("Purchased Receipt",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
+                      }, child: appText("Download invoice",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
                     )
                   ],
                 ),
