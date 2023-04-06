@@ -170,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'Privacy Policy',
                 onTap: () async {
                   var url = Uri.parse(
-                      "https://actechindia.org/privacy-policy.html");
+                      "https://teachmantra.com/privacy-policy.html");
                   if (await canLaunchUrl(url)) {
                     await launchUrl(url);
                   } else {

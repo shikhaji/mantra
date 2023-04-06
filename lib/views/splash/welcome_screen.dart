@@ -41,7 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBoxH120(),
                 Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}",height: 20.h,),
                 SizedBoxH30(),
-                appText("Welcome to Tech Mantra",style:AppTextStyle.title ),
+                appText("Welcome to Teach Mantra",style:AppTextStyle.title ),
                 SizedBoxH34(),
                 appText("Already have an account ?",style:AppTextStyle.lable ),
                 SizedBoxH14(),

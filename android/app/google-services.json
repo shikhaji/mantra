@@ -59,6 +59,59 @@
       },
       "oauth_client": [
         {
+          "client_id": "118473927114-uuoodc6e5tiao9khmpp3q12o3ahh0ihi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.teachmantra",
+            "certificate_hash": "3f0d441ce5e74dba240ba315fa5de10bdb37be75"
+          }
+        },
+        {
+          "client_id": "118473927114-jprq8scv9uoaoi1eaeu3konjv2u0gk4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXl270A9k1TYupYxcFMpb4BgcwCg2s4P4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118473927114-jprq8scv9uoaoi1eaeu3konjv2u0gk4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118473927114:android:b053c86fe36132a0980733",
+        "android_client_info": {
+          "package_name": "com.teach.mantra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118473927114-0f6qcahmalc4o3gieop8l85gmqoufonk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teach.mantra",
+            "certificate_hash": "3f0d441ce5e74dba240ba315fa5de10bdb37be75"
+          }
+        },
+        {
+          "client_id": "118473927114-mo0ekdpdues6dikiu88bo57sgo262vdu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teach.mantra",
+            "certificate_hash": "b906a051370dc66eaee38cd7541e5cdf7568b363"
+          }
+        },
+        {
           "client_id": "118473927114-jprq8scv9uoaoi1eaeu3konjv2u0gk4d.apps.googleusercontent.com",
           "client_type": 3
         }

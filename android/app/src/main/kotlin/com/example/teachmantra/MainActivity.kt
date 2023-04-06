@@ -1,4 +1,4 @@
-package com.example.teachmantra
+package com.teach.mantra
 
 import io.flutter.embedding.android.FlutterActivity
 
