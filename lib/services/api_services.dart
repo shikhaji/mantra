@@ -592,7 +592,7 @@ class ApiService {
 
   Future<GetLogoModel> getLogo(BuildContext context,) async {
     try {
-      Loader.showLoader();
+      Loader.hideLoader();
       Response response;
       response = await dio.post(EndPoints.getLogo);
 

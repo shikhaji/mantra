@@ -128,10 +128,6 @@ class _DrawerState extends State<DrawerWidget> {
                           showDialog(
                             context: context,
                             builder: (ctx) => AlertDialog(
-                              title: const Text(
-                                "Logout",
-                                style: AppTextStyle.alertSubtitle,
-                              ),
                               content: const Text(
                                 "Are You Sure ?",
                                 style: AppTextStyle.subTitle,
@@ -147,7 +143,7 @@ class _DrawerState extends State<DrawerWidget> {
                                       },
                                       child: Container(
                                         color: Colors.white,
-                                        padding: const EdgeInsets.all(14),
+
                                         child: const Text("Cancel"),
                                       ),
                                     ),
@@ -169,7 +165,7 @@ class _DrawerState extends State<DrawerWidget> {
                                       child: Container(
                                         color: Colors.white,
                                         padding: const EdgeInsets.all(14),
-                                        child: const Text("okay"),
+                                        child: const Text("Okay"),
                                       ),
                                     ),
                                   ],

@@ -29,7 +29,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
   int currentPagePosition = 0;
   PageController _controller = PageController();
 
-  int seconds = 9990;
+  int seconds = 120;
   Timer? timer;
 
   @override
@@ -200,9 +200,10 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                     children: [
                       currentPagePosition == widget.results.length - widget.results.length
                       ?Text('')
-                          :TextButton(
+                          :ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(15),
+                          primary: Colors.yellow[800],
                         ),
                         onPressed: () {
                           _controller.animateToPage(
@@ -217,8 +218,9 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                           'Previous',
                           style: GoogleFonts.lato(
                               textStyle: body,
+                              fontWeight: FontWeight.bold,
                               fontSize: 15,
-                              color: Colors.yellow[800]),
+                              color: Colors.blueGrey[800]),
                         ),
                       ),
                        currentPagePosition != widget.results.length-1

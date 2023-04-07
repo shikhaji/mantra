@@ -72,6 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                 SizedBoxH8(),
                 PrimaryTextField(
                   controller: _name,
+                  validator: nameValidator,
                   prefix: const Icon(Icons.perm_identity),
                   hintText: "Enter your name",
                 ),

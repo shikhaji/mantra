@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../model/course_categoryid_model.dart';
+import '../../model/quiz_question_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -33,6 +34,7 @@ class ChapterDisplayScreen extends StatefulWidget {
 
 class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
   List<Course> getAllCourseDetails = [];
+  List<Record> getAllQuestionDetails = [];
   late  String ccid ="";
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -67,8 +69,10 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
     ]);
 
     callApi();
+    callQuestionApi();
     print("ccid: ${widget.arguments?.ccId}");
     print("chapterID: ${widget.arguments?.chapterId}");
+    print(getAllQuestionDetails);
     ccid = "${widget.arguments?.ccId}";
   }
 
@@ -83,6 +87,23 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
 
       setState(() {
         getAllCourseDetails=value.course!;
+        ccid = '${widget.arguments?.ccId}';
+      });
+    });
+
+  }
+
+  Future<void> callQuestionApi() async {
+
+    FormData data() {
+      return FormData.fromMap({
+        "courseid": widget.arguments?.chapterId,
+      });
+    }
+    ApiService().getQuizQuestion(context,data: data()).then((value){
+
+      setState(() {
+        getAllQuestionDetails=value.record!;
         ccid = '${widget.arguments?.ccId}';
       });
     });
@@ -104,68 +125,71 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScroll(
-        children: [
-          SizedBoxH28(),
+      body: SafeArea(
+        child: CustomScroll(
+          children: [
+            SizedBoxH28(),
 
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-            image:  NetworkImage("https://app.teachmantra.com/uploads/${widget.arguments?.ccImg}"),
-            fit: BoxFit.cover,
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            image: DecorationImage(
+              image:  NetworkImage("https://app.teachmantra.com/uploads/${widget.arguments?.ccImg}"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          height: Sizes.s200.h,
+
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              padding: EdgeInsets.all(10),
+
+              child:GestureDetector(
+
+                  onTap: (){
+                    Navigator.pushNamed(context, Routs.videoPlayer,arguments: OtpArguments(
+                      ccUrl: videoURL,
+
+                      // ccChapterName: name,
+                      // ccCourseName: chapterName,
+                      // ccChapterPdf: chapterPdf,
+                      // ccDesc: desc,
+                    ));
+                  },
+
+                  child: Image.asset(AppAsset.youtube1,scale: 15)),
+            ),
           ),
         ),
-        height: Sizes.s200.h,
-
-        child: Align(
-          alignment: Alignment.center,
-          child: Container(
-            padding: EdgeInsets.all(10),
-
-            child:GestureDetector(
-
-                onTap: (){
-                  Navigator.pushNamed(context, Routs.videoPlayer,arguments: OtpArguments(
-                    ccUrl: videoURL,
-
-                    // ccChapterName: name,
-                    // ccCourseName: chapterName,
-                    // ccChapterPdf: chapterPdf,
-                    // ccDesc: desc,
-                  ));
-                },
-
-                child: Image.asset(AppAsset.youtube1,scale: 15)),
-          ),
-        ),
-      ),
 
 
-          SizedBoxH20(),
-          PrimaryButton(lable: 'Take Quiz', onPressed: (){
-            Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
-              ccId: ccid,
-              chapterId: "${widget.arguments?.chapterId}",
-            ));
-          },color: AppColor.grey),
-          SizedBoxH34(),
-          Align(
+            SizedBoxH20(),
+
+            PrimaryButton(lable: 'Take Quiz', onPressed: (){
+              Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
+                ccId: ccid,
+                chapterId: "${widget.arguments?.chapterId}",
+              ));
+            },color: AppColor.green),
+            SizedBoxH34(),
+            Align(
+                alignment: Alignment.topLeft,
+                child: appText("${widget.arguments?.ccCourseName}",
+                    style: AppTextStyle.title)
+            ),
+            SizedBoxH20(),
+            Align(
               alignment: Alignment.topLeft,
-              child: appText("${widget.arguments?.ccCourseName}",
-                  style: AppTextStyle.title)
-          ),
-          SizedBoxH20(),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-                "${widget.arguments?.ccDesc}",
-                style: AppTextStyle.subTitle),
-          ),
+              child: Text(
+                  "${widget.arguments?.ccDesc}",
+                  style: AppTextStyle.subTitle),
+            ),
 
 
-        ],
+          ],
 
+        ),
       ),
 
       appBar: SecondaryAppBar(
