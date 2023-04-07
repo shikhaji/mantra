@@ -62,6 +62,14 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         centerTitle: true,
         title:  appText('Quiz questions',style:AppTextStyle.appBarTitle.copyWith(color: AppColor.black)),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () {},
+            );
+          },
+        ),
       ),
       body: _futureWidget(),
     );

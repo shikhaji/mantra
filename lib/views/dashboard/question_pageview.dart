@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teachmantra/views/dashboard/scorepage.dart';
 
@@ -28,7 +29,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
   int currentPagePosition = 0;
   PageController _controller = PageController();
 
-  int seconds = 120;
+  int seconds = 9990;
   Timer? timer;
 
   @override
@@ -132,7 +133,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Question ${index + 1}',
+                              'Questions : ${index + 1}/${widget.results.length}',
                               style:AppTextStyle.title.copyWith(color: Colors.yellow[800]),
                             ),
                             Stack(
@@ -218,7 +219,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                               color: Colors.yellow[800]),
                         ),
                       ),
-                      ElevatedButton(
+                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(15),
                           primary: Colors.yellow[800],
@@ -239,7 +240,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                               fontSize: 15,
                               color: Colors.blueGrey[800]),
                         ),
-                      ),
+                      )
                     ],
                   ),
                   SizedBox(
