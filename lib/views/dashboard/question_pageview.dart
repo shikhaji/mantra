@@ -198,7 +198,9 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      TextButton(
+                      currentPagePosition == widget.results.length - widget.results.length
+                      ?Text('')
+                          :TextButton(
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(20),
                         ),
@@ -219,7 +221,8 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                               color: Colors.yellow[800]),
                         ),
                       ),
-                       ElevatedButton(
+                       currentPagePosition != widget.results.length-1
+                        ?ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(15),
                           primary: Colors.yellow[800],
@@ -241,6 +244,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                               color: Colors.blueGrey[800]),
                         ),
                       )
+                           :Text('')
                     ],
                   ),
                   SizedBox(

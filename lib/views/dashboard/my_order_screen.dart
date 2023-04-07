@@ -92,13 +92,15 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     Text("${getAllCourses.length.toString()} Category",style: AppTextStyle.alertSubtitle2),
                     Container(
                       decoration: BoxDecoration(
-                          color: AppColor.primaryColor
+                          color: AppColor.primaryColor,
+                          borderRadius: BorderRadius.circular(10),
                       ),
+                      width: Sizes.s100,
                       child: TextButton(onPressed: (){
 
                         Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:"${widget.arguments!.ccId}"));
 
-                      }, child: appText("Show invoice",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
+                      }, child: appText("Invoice",style: AppTextStyle.alertSubtitle2.copyWith(color: AppColor.white))),
                     )
                   ],
                 ),
