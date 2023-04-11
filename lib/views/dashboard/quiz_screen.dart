@@ -9,7 +9,7 @@ import '../../routes/arguments.dart';
 import 'dart:developer';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter/services.dart';
 import '../../services/api_services.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_text_style.dart';
@@ -21,7 +21,6 @@ class QuizScreen extends StatefulWidget {
   final OtpArguments? arguments;
   QuizScreen({Key? key, this.arguments}) : super(key: key);
   List wrongRightList = [];
-
 
 
 
@@ -37,6 +36,7 @@ class _QuizScreenState extends State<QuizScreen> {
     super.initState();
     print("chapterID: ${widget.arguments?.chapterId}");
     callQuestionApi();
+
 
   }
   Future<List<Results>?> getStates() async {
@@ -77,6 +77,8 @@ class _QuizScreenState extends State<QuizScreen> {
     });
 
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,14 +86,7 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         centerTitle: true,
         title:  appText('Quiz questions',style:AppTextStyle.appBarTitle.copyWith(color: AppColor.black)),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {},
-            );
-          },
-        ),
+        leading: BackButton(),
       ),
       body: _futureWidget(),
     );

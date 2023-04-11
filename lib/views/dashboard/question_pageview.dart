@@ -103,191 +103,223 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
       });
     });
   }
-
+  Future<bool> _onPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Exit the quiz'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            //<-- SEE HERE
+            child: new Text('No'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ScorePage(
+                    useranswerlist: _userAnswerList,
+                    correctanswerlist: correctanswerlist,
+                  ),
+                ),
+                    (route) => false),
+            // <-- SEE HERE
+            child: new Text('Yes'),
+          ),
+        ],
+      ),
+    )) ??
+        false;
+  }
   @override
   Widget build(BuildContext context) {
     final TextStyle subtitle = Theme.of(context).textTheme.subtitle1!;
     final TextStyle body = Theme.of(context).textTheme.bodyText1!;
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: Center(
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: widget.results.length,
-                pageSnapping: true,
-                onPageChanged: (position) {
-                  currentPagePosition = position;
-                },
-                itemBuilder: (context, index) {
-                  String userAnswer = _userAnswerList[index];
-                  int checkedOptionPosition =
-                  widget.wrongRightList[index].indexOf(userAnswer);
+    return WillPopScope(
+      onWillPop: _onPop,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: Center(
+                child: PageView.builder(
+                  controller: _controller,
+                  itemCount: widget.results.length,
+                  pageSnapping: true,
+                  onPageChanged: (position) {
+                    currentPagePosition = position;
+                  },
+                  itemBuilder: (context, index) {
+                    String userAnswer = _userAnswerList[index];
+                    int checkedOptionPosition =
+                    widget.wrongRightList[index].indexOf(userAnswer);
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 18.0, vertical: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Question : ${index + 1}/${widget.results.length}',
-                              style:AppTextStyle.title.copyWith(color: Colors.yellow[800]),
-                            ),
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                normalText(
-                                    color: Colors.white,
-                                    size: 24,
-                                    text: '$seconds'),
-                                  SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: CircularProgressIndicator(
-                                    value: seconds / 60,
-                                    valueColor: const AlwaysStoppedAnimation(
-                                        Colors.white),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 18.0, vertical: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Question : ${index + 1}/${widget.results.length}',
+                                style:AppTextStyle.title.copyWith(color: Colors.yellow[800]),
+                              ),
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  normalText(
+                                      color: Colors.white,
+                                      size: 24,
+                                      text: '$seconds'),
+                                    SizedBox(
+                                    width: 80,
+                                    height: 80,
+                                    child: CircularProgressIndicator(
+                                      value: seconds / 60,
+                                      valueColor: const AlwaysStoppedAnimation(
+                                          Colors.white),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          '${widget.results.elementAt(index).question}',
-                          style: AppTextStyle.title1
-                              .copyWith(color: AppColor.white),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Options(
-                          index: index,
-                          wrongRightList: widget.wrongRightList,
-                          selectedPosition: checkedOptionPosition,
-                          onOptionsSelected: (selectedOption) {
-                            print("selected item is $selectedOption");
-                            _userAnswerList[currentPagePosition] =
-                                selectedOption;
-                            print(_userAnswerList.toList().toString());
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            '${widget.results.elementAt(index).question}',
+                            style: AppTextStyle.title1
+                                .copyWith(color: AppColor.white),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Options(
+                            index: index,
+                            wrongRightList: widget.wrongRightList,
+                            selectedPosition: checkedOptionPosition,
+                            onOptionsSelected: (selectedOption) {
+                              print("selected item is $selectedOption");
+                              _userAnswerList[currentPagePosition] =
+                                  selectedOption;
+                              print(_userAnswerList.toList().toString());
+                            },
+                          ),
+                          SizedBox(
+                            height: 60,
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        currentPagePosition == widget.results.length - widget.results.length
+                        ?Text('')
+                            :ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(15),
+                            primary: Colors.yellow[800],
+                          ),
+                          onPressed: () {
+                            _controller.animateToPage(
+                              currentPagePosition == 0
+                                  ? 0
+                                  : currentPagePosition - 1,
+                              duration: Duration(milliseconds: 100),
+                              curve: Curves.easeIn,
+                            );
                           },
+                          child: Text(
+                            'Previous',
+                            style: GoogleFonts.lato(
+                                textStyle: body,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.blueGrey[800]),
+                          ),
                         ),
-                        SizedBox(
-                          height: 60,
+                         currentPagePosition != widget.results.length-1
+                          ?ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(15),
+                            primary: Colors.yellow[800],
+                          ),
+                          onPressed: () {
+                            _controller.animateToPage(
+                                currentPagePosition == widget.results.length - 1
+                                    ? currentPagePosition
+                                    : currentPagePosition + 1,
+                                duration: Duration(milliseconds: 100),
+                                curve: Curves.easeIn);
+                          },
+                          child: Text(
+                            'Next',
+                            style: GoogleFonts.lato(
+                                textStyle: body,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.blueGrey[800]),
+                          ),
                         )
+                             :Text('')
                       ],
                     ),
-                  );
-                },
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      currentPagePosition == widget.results.length - widget.results.length
-                      ?Text('')
-                          :ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(15),
-                          primary: Colors.yellow[800],
-                        ),
-                        onPressed: () {
-                          _controller.animateToPage(
-                            currentPagePosition == 0
-                                ? 0
-                                : currentPagePosition - 1,
-                            duration: Duration(milliseconds: 100),
-                            curve: Curves.easeIn,
-                          );
-                        },
-                        child: Text(
-                          'Previous',
-                          style: GoogleFonts.lato(
-                              textStyle: body,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.blueGrey[800]),
-                        ),
-                      ),
-                       currentPagePosition != widget.results.length-1
-                        ?ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(15),
-                          primary: Colors.yellow[800],
-                        ),
-                        onPressed: () {
-                          _controller.animateToPage(
-                              currentPagePosition == widget.results.length - 1
-                                  ? currentPagePosition
-                                  : currentPagePosition + 1,
-                              duration: Duration(milliseconds: 100),
-                              curve: Curves.easeIn);
-                        },
-                        child: Text(
-                          'Next',
-                          style: GoogleFonts.lato(
-                              textStyle: body,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.blueGrey[800]),
-                        ),
-                      )
-                           :Text('')
-                    ],
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(10),
-                        primary: Colors.blueGrey[800],
-                        fixedSize:
-                        Size(MediaQuery.of(context).size.width * 0.7, 50)),
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ScorePage(
-                              useranswerlist: _userAnswerList,
-                              correctanswerlist: correctanswerlist,
+                    SizedBox(
+                      height: 25,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(10),
+                          primary: Colors.blueGrey[800],
+                          fixedSize:
+                          Size(MediaQuery.of(context).size.width * 0.7, 50)),
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ScorePage(
+                                useranswerlist: _userAnswerList,
+                                correctanswerlist: correctanswerlist,
+                              ),
                             ),
-                          ),
-                              (route) => false);
-                    },
-                    child: Text('SUBMIT',
-                        style: AppTextStyle.buttonTextStyle2.copyWith(
-                          color: AppColor.white,
-                        )),
-                  ),
-                ],
+                                (route) => false);
+                      },
+                      child: Text('SUBMIT',
+                          style: AppTextStyle.buttonTextStyle2.copyWith(
+                            color: AppColor.white,
+                          )),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
 
