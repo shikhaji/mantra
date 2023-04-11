@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:teachmantra/views/auth/signUp.dart';
 import '../../model/get_logo_model.dart';
 import '../../services/api_services.dart';
 import '../../utils/app_text_style.dart';
@@ -41,7 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBoxH120(),
                 Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}",height: 20.h,),
                 SizedBoxH30(),
-                appText("Welcome to Tech Mantra",style:AppTextStyle.title ),
+                appText("Welcome to Teach Mantra",style:AppTextStyle.title ),
                 SizedBoxH34(),
                 appText("Already have an account ?",style:AppTextStyle.lable ),
                 SizedBoxH14(),
@@ -66,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                  builder: (context) =>MobileVerificationScreen()));
+                                  builder: (context) =>SignUpScreen()));
                         //  clearField();
                       }),
                 ),

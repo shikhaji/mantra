@@ -83,7 +83,7 @@ class _DrawerState extends State<DrawerWidget> {
                       title: 'Privacy Policy',
                       onTap: () async {
                         var url = Uri.parse(
-                            "https://teachmantra.com/privacy-policy.html");
+                            "https://app.teachmantra.com/privacy-policy.html");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {

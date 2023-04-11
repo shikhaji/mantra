@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teachmantra/views/dashboard/scorepage.dart';
-
 import '../../const/text_style.dart';
+import '../../model/quiz_question_model.dart';
+import '../../services/api_services.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_text_style.dart';
 import 'options.dart';
@@ -16,8 +17,9 @@ typedef void OptionSelectedCallback(String option);
 class QuestionsPageView extends StatefulWidget {
   final List results;
   final List wrongRightList;
+  final  getQuizTime;
 
-  QuestionsPageView({required this.results, required this.wrongRightList});
+  QuestionsPageView({required this.results, required this.wrongRightList,required this.getQuizTime});
 
   @override
   _QuestionsPageViewState createState() => _QuestionsPageViewState();
@@ -26,14 +28,18 @@ class QuestionsPageView extends StatefulWidget {
 class _QuestionsPageViewState extends State<QuestionsPageView> {
   List<String> _userAnswerList = [];
   List<String> correctanswerlist = [];
+
   int currentPagePosition = 0;
   PageController _controller = PageController();
 
-  int seconds = 120;
+  late int seconds;
   Timer? timer;
+
+
 
   @override
   void initState() {
+    seconds = widget.getQuizTime;
     super.initState();
     _userAnswerList.addAll(widget.results.map((e) => ""));
     correctanswerlist = [];
@@ -44,6 +50,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
     //   _userAnswerList.add("");
     // }
     startTimer();
+    int getTime = widget.getQuizTime;
   }
 
   @override
@@ -54,8 +61,10 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
 
   @override
   startTimer() {
+    //int seconds = widget.getQuizTime;
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
+
         if (seconds > 0) {
           seconds--;
         } else {
@@ -133,7 +142,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Questions : ${index + 1}/${widget.results.length}',
+                              'Question : ${index + 1}/${widget.results.length}',
                               style:AppTextStyle.title.copyWith(color: Colors.yellow[800]),
                             ),
                             Stack(
@@ -142,8 +151,8 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                                 normalText(
                                     color: Colors.white,
                                     size: 24,
-                                    text: "$seconds"),
-                                SizedBox(
+                                    text: '$seconds'),
+                                  SizedBox(
                                   width: 80,
                                   height: 80,
                                   child: CircularProgressIndicator(
@@ -281,5 +290,8 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
         ],
       ),
     );
+
   }
 }
+
+

@@ -1,13 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:teachmantra/views/dashboard/question_pageview.dart';
 import '../../model/questions.dart';
+import '../../model/quiz_question_model.dart';
 import '../../model/shuffleanswers.dart';
 import '../../routes/arguments.dart';
 import 'dart:developer';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../../services/api_services.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_text_style.dart';
 import '../../widgets/app_text.dart';
@@ -21,17 +24,20 @@ class QuizScreen extends StatefulWidget {
 
 
 
+
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-
+  var getQuizTime;
   @override
   void initState() {
 
     super.initState();
     print("chapterID: ${widget.arguments?.chapterId}");
+    callQuestionApi();
+
   }
   Future<List<Results>?> getStates() async {
     Uri url = Uri.parse("https://app.teachmantra.com/get_ajax/get_question_list");
@@ -54,6 +60,22 @@ class _QuizScreenState extends State<QuizScreen> {
 
       return null;
     }
+  }
+  Future<void> callQuestionApi() async {
+
+    FormData data() {
+      return FormData.fromMap({
+        "courseid": widget.arguments?.chapterId,
+      });
+    }
+    ApiService().getQuizQuestion(context,data: data()).then((value){
+
+      setState(() {
+        getQuizTime=value.totalTime;
+        print("TOTAL TIME ------------------->$getQuizTime");
+      });
+    });
+
   }
   @override
   Widget build(BuildContext context) {
@@ -88,11 +110,12 @@ class _QuizScreenState extends State<QuizScreen> {
               });
 
           return QuestionsPageView(
-              results: results, wrongRightList: widget.wrongRightList);
+              results: results, wrongRightList: widget.wrongRightList,getQuizTime: getQuizTime,);
         } else {
           return Center(child: CircularProgressIndicator());
         }
       },
     );
   }
+
 }

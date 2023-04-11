@@ -2,18 +2,18 @@ class quizQuestionModel {
   int? status;
   String? message;
   List<Record>? record;
+  int? totalTime;
 
-  quizQuestionModel({this.status, this.message, this.record});
+  quizQuestionModel({this.status, this.message, this.record, this.totalTime});
 
   quizQuestionModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['record'] != null) {
       record = <Record>[];
-      json['record'].forEach((v) {
-        record!.add(new Record.fromJson(v));
-      });
+
     }
+    totalTime = json['total_time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +23,7 @@ class quizQuestionModel {
     if (this.record != null) {
       data['record'] = this.record!.map((v) => v.toJson()).toList();
     }
+    data['total_time'] = this.totalTime;
     return data;
   }
 }

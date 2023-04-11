@@ -148,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: 'Terms & Conditions',
             onTap: () async {
               var url = Uri.parse(
-                  "https://actechindia.org/terms-conditions.html");
+                  "https://app.teachmantra.com/terms-conditions.html");
               if (await canLaunchUrl(url)) {
                 await launchUrl(url);
               } else {
@@ -191,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'About Us',
                 onTap: () async {
                   var url = Uri.parse(
-                      "https://actechindia.org/about-us.html");
+                      "https://teachmantra.com/about-us.html");
                   if (await canLaunchUrl(url)) {
                     await launchUrl(url);
                   } else {

@@ -148,7 +148,7 @@ class _CourseBuyScreenState extends State<CourseBuyScreen> {
                        isExpanded: true,
 
                        colors: const ProgressBarColors(
-                         playedColor: AppColor.primaryColor,
+                         playedColor: Color(0xffa8172c),
                          handleColor: AppColor.primaryLightColor,
                        ),
                      ),
