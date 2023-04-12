@@ -69,7 +69,7 @@ dependencies:
   flutter_inappwebview: ^5.7.2+3
   html_unescape: ^2.0.0
   flutter_tts: ^3.2.3
-
+  camera: ^0.10.3+2
 
 
 dev_dependencies:

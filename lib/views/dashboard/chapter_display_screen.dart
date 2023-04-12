@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 
 class ChapterDisplayScreen extends StatefulWidget {
   final OtpArguments? arguments;
+
   const ChapterDisplayScreen({Key? key, this.arguments}) : super(key: key);
 
   @override

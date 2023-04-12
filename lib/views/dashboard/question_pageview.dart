@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import '../../const/text_style.dart';
 import '../../model/quiz_question_model.dart';
 import '../../services/api_services.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
 import 'options.dart';
 
@@ -28,7 +30,9 @@ class QuestionsPageView extends StatefulWidget {
 class _QuestionsPageViewState extends State<QuestionsPageView> {
   List<String> _userAnswerList = [];
   List<String> correctanswerlist = [];
-
+  late List<CameraDescription> cameras;
+  late CameraController cameraController;
+  int direction = 1;
   int currentPagePosition = 0;
   PageController _controller = PageController();
 
@@ -39,8 +43,10 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
 
   @override
   void initState() {
+    //seconds = 9999;
     seconds = widget.getQuizTime;
     super.initState();
+    startCamera(direction);
     _userAnswerList.addAll(widget.results.map((e) => ""));
     correctanswerlist = [];
     for (int i = 0; i < widget.results.length; i++) {
@@ -50,13 +56,31 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
     //   _userAnswerList.add("");
     // }
     startTimer();
-    int getTime = widget.getQuizTime;
-  }
 
+  }
+  void startCamera(int direction) async {
+    cameras = await availableCameras();
+
+    cameraController = CameraController(
+      cameras[direction],
+      ResolutionPreset.high,
+      enableAudio: false,
+    );
+
+    await cameraController.initialize().then((value) {
+      if(!mounted) {
+        return;
+      }
+      setState(() {}); //To refresh widget
+    }).catchError((e) {
+      print(e);
+    });
+  }
   @override
   void dispose() {
     timer!.cancel();
     super.dispose();
+    cameraController.dispose();
   }
 
   @override
@@ -172,20 +196,16 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Question : ${index + 1}/${widget.results.length}',
-                                style:AppTextStyle.title.copyWith(color: Colors.yellow[800]),
-                              ),
                               Stack(
                                 alignment: Alignment.center,
                                 children: [
                                   normalText(
                                       color: Colors.white,
-                                      size: 24,
+                                      size: 20,
                                       text: '$seconds'),
-                                    SizedBox(
-                                    width: 80,
-                                    height: 80,
+                                  SizedBox(
+                                    width: 60,
+                                    height: 60,
                                     child: CircularProgressIndicator(
                                       value: seconds / 60,
                                       valueColor: const AlwaysStoppedAnimation(
@@ -193,6 +213,16 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                                     ),
                                   ),
                                 ],
+                              ),
+                              Text(
+                                'Question : ${index + 1}/${widget.results.length}',
+                                style:AppTextStyle.appBarTextTitle.copyWith(color: Colors.yellow[800]),
+                              ),
+
+                              Container(
+                                height: Sizes.s100,
+                                width: Sizes.s70,
+                                child: CameraPreview(cameraController),
                               ),
                             ],
                           ),
