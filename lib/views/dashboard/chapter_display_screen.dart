@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:teachmantra/utils/function.dart';
+import 'package:teachmantra/views/dashboard/demo.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../model/course_categoryid_model.dart';
 import '../../model/quiz_question_model.dart';
@@ -23,6 +24,7 @@ import '../../widgets/primary_appbar.dart';
 import '../../widgets/primary_button.dart';
 import '../../widgets/scrollview.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+
 
 class ChapterDisplayScreen extends StatefulWidget {
   final OtpArguments? arguments;
@@ -177,6 +179,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
 
                   ApiService().getQuizQuestion(context,data: cid()).then((value) {
                     if(value.status ==200){
+
                       Navigator.pushNamed(context, Routs.questionScreen,arguments: OtpArguments(
                       ccId: ccid,
                       chapterId: "${widget.arguments?.chapterId}"));
@@ -187,6 +190,13 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
                   });
                 }
               },color: AppColor.primaryColor),
+              SizedBoxH18(),
+              PrimaryButton(lable: 'Recording', onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  CameraPage()),
+                );
+              },color: AppColor.green,),
               SizedBoxH34(),
               Align(
                   alignment: Alignment.topLeft,
