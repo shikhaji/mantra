@@ -92,7 +92,7 @@ class _EditProfileState extends State<EditProfile> with ValidationMixin {
               children: [
                 SizedBoxH34(),
                 Center(
-                  child: Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}",height: 20.h,),
+                  child: Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSHEADERLOGO}",height: 20.h,),
                 ),
                 SizedBoxH28(),
                 appText("Edit Profile", style: AppTextStyle.title),

@@ -53,7 +53,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                 SizedBoxH34(),
                 SizedBoxH34(),
                 Center(
-                  child: Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}",height: 20.h,),
+                  child: Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSHEADERLOGO}",height: 20.h,),
                 ),
                 SizedBoxH28(),
                 SizedBoxH28(),

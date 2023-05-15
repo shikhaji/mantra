@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Container(
         child: Scaffold(
       body: Center(
-        child:Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}",height: 20.h,),
+        child:Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSHEADERLOGO}",height: 20.h,),
         // child: Image.asset(
         //   AppAsset.mainLogoImage,
         //   height: 25.h,

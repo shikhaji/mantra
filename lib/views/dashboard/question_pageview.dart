@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:teachmantra/views/dashboard/contants.dart';
 import 'package:teachmantra/views/dashboard/scorepage.dart';
 import '../../const/text_style.dart';
 import '../../model/quiz_question_model.dart';
@@ -33,7 +34,6 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
   List<String> correctanswerlist = [];
   late List<CameraDescription> cameras;
   late CameraController _cameraController;
-  bool _isRecording = false;
   int direction = 1;
   int currentPagePosition = 0;
   PageController _controller = PageController();
@@ -61,6 +61,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
 
 
   }
+  @override
 
   _initCamera() async {
     final cameras = await availableCameras();
@@ -70,21 +71,7 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
 
   }
 
-  _recordVideo() async {
-    if (_isRecording) {
-      final file = await _cameraController.stopVideoRecording();
-      setState(() => _isRecording = false);
-      final route = MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => VideoPage(filePath: file.path),
-      );
-      Navigator.push(context, route);
-    } else {
-      await _cameraController.prepareForVideoRecording();
-      await _cameraController.startVideoRecording();
-      setState(() => _isRecording = true);
-    }
-  }
+
 
   @override
   void dispose() {
@@ -200,12 +187,13 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
 
                             SizedBox(
                               height: Sizes.s100,
-                              width: Sizes.s70,
                               child: Center(
                                 child: Stack(
                                   alignment: Alignment.topRight,
                                   children: [
-                                    CameraPreview(_cameraController),
+                                    _cameraController.value.isInitialized
+                                    ?CameraPreview(_cameraController)
+                                    :SizedBox()
 
                                   ],
                                 ),
@@ -316,16 +304,15 @@ class _QuestionsPageViewState extends State<QuestionsPageView> {
                         fixedSize:
                         Size(MediaQuery.of(context).size.width * 0.7, 50)),
                     onPressed: () {
-                      // Navigator.pushAndRemoveUntil(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => ScorePage(
-                      //         useranswerlist: _userAnswerList,
-                      //         correctanswerlist: correctanswerlist,
-                      //       ),
-                      //     ),
-                      //         (route) => false);
-                      _recordVideo();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ScorePage(
+                              useranswerlist: _userAnswerList,
+                              correctanswerlist: correctanswerlist,
+                            ),
+                          ),
+                              (route) => false);
                     },
                     child: Text('SUBMIT',
                         style: AppTextStyle.buttonTextStyle2.copyWith(

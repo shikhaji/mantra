@@ -1,6 +1,10 @@
 
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import '../../model/get_logo_model.dart';
 import '../../routes/arguments.dart';
@@ -30,8 +34,6 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _referCode = TextEditingController();
-  final TextEditingController _centerCodeNAme = TextEditingController();
-  final TextEditingController _categories = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
   String centerCodeName = "";
@@ -47,6 +49,30 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
         setState(() { getLogo = value.lOGO;})
     );
     print(getLogo);
+    _deviceDetails();
+  }
+
+  String deviceName ='';
+  String deviceVersion ='';
+  String identifier= '';
+
+  Future<void>_deviceDetails() async{
+    final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
+    try {
+      if (Platform.isAndroid) {
+        var build = await deviceInfoPlugin.androidInfo;
+        setState(() {
+          deviceName = build.model;
+          deviceVersion = build.version.toString();
+          identifier = build.id;
+          print("---------------------------------------> $identifier");
+        });
+        //UUID for Android
+      }
+    } on PlatformException {
+      print('Failed to get platform version');
+    }
+
   }
   @override
   Widget build(BuildContext context) {
@@ -60,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
               children: [
                 SizedBoxH34(),
                 Center(
-                  child: Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}",height: 20.h,),
+                  child: Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSHEADERLOGO}",height: 20.h,),
                 ),
                 SizedBoxH28(),
                 appText("Sign Up", style: AppTextStyle.title),
@@ -131,6 +157,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                         ApiService().signUp(context,data:data());
                       }
                     }),
+                SizedBoxH10(),
               ],
             ),
           )),
@@ -144,12 +171,9 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
       "mobile": widget.arguments?.phoneNumber,
       "password": _password.text.trim(),
       "referal_code": _referCode.text.trim(),
+      "device_id":identifier.toString().trim(),
     });
   }
 
-  FormData cc() {
-    return FormData.fromMap({
-      "center_code": _referCode.text.trim(),
-    });
-  }
+
 }

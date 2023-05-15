@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:teachmantra/utils/function.dart';
-import 'package:teachmantra/views/dashboard/demo.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../model/course_categoryid_model.dart';
 import '../../model/quiz_question_model.dart';
@@ -42,6 +41,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
   List<Record> getAllQuestionDetails = [];
   late  String ccid ="";
   final _formKey = GlobalKey<FormState>();
+
 
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -174,7 +174,8 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
 
 
               SizedBoxH20(),
-              PrimaryButton(lable: 'Take Quiz', onPressed: (){
+              PrimaryButton(lable: 'Take Quiz', onPressed: ()
+              {
                 if (_formKey.currentState!.validate()) {
 
                   ApiService().getQuizQuestion(context,data: cid()).then((value) {
@@ -189,15 +190,15 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
                     }
                   });
                 }
-              },color: AppColor.primaryColor),
+              },
+              //     {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => const MyCall()),
+              //       );
+              //     },
+                  color: AppColor.primaryColor),
               SizedBoxH18(),
-              PrimaryButton(lable: 'Recording', onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  CameraPage()),
-                );
-              },color: AppColor.green,),
-              SizedBoxH34(),
               Align(
                   alignment: Alignment.topLeft,
                   child: appText("${widget.arguments?.ccCourseName}",

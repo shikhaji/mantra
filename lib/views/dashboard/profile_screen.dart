@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: NetworkImage("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}"),
+                        image: NetworkImage("https://app.teachmantra.com/uploads/${getLogo?.sSHEADERLOGO}"),
                         //image: AssetImage(AppAsset.mainLogoImage),
                         fit: BoxFit.cover,
                         ))),
@@ -191,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'About Us',
                 onTap: () async {
                   var url = Uri.parse(
-                      "https://teachmantra.com/about-us.html");
+                      "https://app.teachmantra.com/about-us.html");
                   if (await canLaunchUrl(url)) {
                     await launchUrl(url);
                   } else {

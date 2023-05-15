@@ -15,6 +15,14 @@ mixin ValidationMixin {
     }
   }
 
+  String? deviceIDValidator(String? name) {
+    if (name!.isNotEmpty) {
+      return null;
+    } else {
+      return "Please Enter Device ID";
+    }
+  }
+
   String? msgValidator(String? msg) {
     if (msg!.isNotEmpty) {
       return null;

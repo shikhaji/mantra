@@ -123,9 +123,12 @@ class _MyClassScreenState extends State<MyClassScreen> {
     required String ccid,
     required String url,
   }){
+
     return Column(
       children: [
-        Container(
+        getAllCourses.length==null
+        ?Text("NO")
+            :Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(color: AppColor.grey,width: Sizes.s1.w),

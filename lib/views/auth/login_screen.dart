@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
+import 'package:teachmantra/views/auth/signUp.dart';
 import '../../model/get_logo_model.dart';
 import '../../services/api_services.dart';
 import '../../utils/app_assets.dart';
@@ -25,6 +30,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  final TextEditingController _deviceID = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
   LOGO? getLogo;
@@ -36,7 +42,33 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
         setState(() { getLogo = value.lOGO;})
     );
     print(getLogo);
+    _deviceDetails();
+
+
   }
+  String deviceName ='';
+  String deviceVersion ='';
+  String identifier= '';
+
+  Future<void>_deviceDetails() async{
+    final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
+    try {
+      if (Platform.isAndroid) {
+        var build = await deviceInfoPlugin.androidInfo;
+        setState(() {
+          deviceName = build.model;
+          deviceVersion = build.version.toString();
+          identifier = build.id;
+          print("---------------------------------------> $identifier");
+        });
+        //UUID for Android
+      }
+    } on PlatformException {
+      print('Failed to get platform version');
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                 SizedBoxH34(),
                 SizedBoxH34(),
                 Center(
-                  child: Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}",height: 20.h,),
+                  child: Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSHEADERLOGO}",height: 20.h,),
                   // child: Image.asset(
                   //   AppAsset.mainLogoImage,
                   //   height: 20.h,
@@ -65,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                     style: AppTextStyle.subTitle),
                 SizedBoxH28(),
                 appText("Phone number", style: AppTextStyle.lable),
+
                 SizedBoxH8(),
                 PrimaryTextField(
                   controller: _phone,
@@ -116,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                           return FormData.fromMap({
                           "user_id": _phone.text.trim(),
                           "password": _password.text.trim(),
+                            "device_id":identifier.toString(),
                           });
                           }
                           ApiService().login(context,data:data());
@@ -137,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                           Navigator.push(
                             context,
                               MaterialPageRoute(
-                                  builder: (context) =>MobileVerificationScreen()));
+                                  builder: (context) =>SignUpScreen()));
                                 //  clearField();
                                 },
                         child: appText(

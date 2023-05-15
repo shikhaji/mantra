@@ -210,7 +210,7 @@ class _DrawerState extends State<DrawerWidget> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: NetworkImage("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}"),
+                          image: NetworkImage("https://app.teachmantra.com/uploads/${getLogo?.sSHEADERLOGO}"),
                           //image: AssetImage(AppAsset.mainLogoImage),
                           fit: BoxFit.cover,
                         ))),

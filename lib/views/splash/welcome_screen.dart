@@ -40,7 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBoxH120(),
-                Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSFAVICON}",height: 20.h,),
+                Image.network("https://app.teachmantra.com/uploads/${getLogo?.sSHEADERLOGO}",height: 20.h,),
                 SizedBoxH30(),
                 appText("Welcome to Teach Mantra",style:AppTextStyle.title ),
                 SizedBoxH34(),
@@ -67,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                  builder: (context) =>SignUpScreen()));
+                                  builder: (context) =>MobileVerificationScreen()));
                         //  clearField();
                       }),
                 ),

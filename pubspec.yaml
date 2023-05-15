@@ -1,4 +1,4 @@
-  name: teachmantra
+name: teachmantra
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -70,6 +70,8 @@ dependencies:
   html_unescape: ^2.0.0
   flutter_tts: ^3.2.3
   camera: ^0.10.3+2
+  device_info_plus: ^8.2.1
+
 
 
 dev_dependencies:
